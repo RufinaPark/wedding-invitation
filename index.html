@@ -366,55 +366,77 @@
     </div>
 </section>
 
-<div id="galleryModal" 
-     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; touch-action: none;" 
-     onclick="this.style.display='none'">
+<div id="galleryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; touch-action: none;" onclick="closeGallery()">
+    <div onclick="event.stopPropagation(); changePhoto(-1);" style="position: absolute; left: 10px; color: white; font-size: 40px; cursor: pointer; padding: 20px; z-index: 3001;">‹</div>
     
-    <img id="modalImg" src="" 
-         style="max-width: 95%; max-height: 90%; border-radius: 5px; 
-                pointer-events: none; -webkit-user-select: none; -webkit-touch-callout: none; user-select: none;">
+    <img id="modalImg" src="" style="max-width: 95%; max-height: 85%; border-radius: 5px; pointer-events: none; -webkit-user-select: none; user-select: none;">
+    
+    <div onclick="event.stopPropagation(); changePhoto(1);" style="position: absolute; right: 10px; color: white; font-size: 40px; cursor: pointer; padding: 20px; z-index: 3001;">›</div>
+    
+    <div id="galleryIndex" style="position: absolute; bottom: 30px; color: white; font-size: 14px; letter-spacing: 1px;"></div>
 </div>
 
-<style>
-    /* 썸네일 스타일 가이드 */
-    .gallery-item img {
-        width: 100%; 
-        max-width: 110px; /* 요청하신 가로폭 제한 */
-        height: 110px; 
-        object-fit: cover; 
-        border-radius: 2px; 
-        cursor: pointer; 
-        display: block;
-    }
-</style>
-
 <script>
-    // 1. 사진 더보기 기능 (기존과 동일)
-    function loadMorePhotos() {
-        const hiddenItems = document.querySelectorAll('.gallery-item[style*="display:none"]');
-        const loadCount = 9; 
-        for (let i = 0; i < loadCount && i < hiddenItems.length; i++) {
-            hiddenItems[i].style.display = 'block';
-        }
-        if (document.querySelectorAll('.gallery-item[style*="display:none"]').length === 0) {
-            document.getElementById('loadMoreBtn').style.display = 'none';
+    let currentIndex = 0;
+    const allImages = []; // 모든 이미지 주소를 담을 배열
+
+    // 페이지 로드 시 모든 이미지 주소 미리 수집
+    window.onload = function() {
+        const imgs = document.querySelectorAll('.gallery-item img');
+        imgs.forEach((img, index) => {
+            allImages.push(img.src);
+            // 각 이미지의 클릭 이벤트를 인덱스 기반으로 변경
+            img.setAttribute('onclick', `openGallery(${index})`);
+        });
+    };
+
+    // 1. 갤러리 열기 (뒤로가기 방지용 히스토리 추가)
+    function openGallery(index) {
+        currentIndex = index;
+        updateModalPhoto();
+        document.getElementById('galleryModal').style.display = 'flex';
+        
+        // 브라우저 히스토리에 가짜 상태 추가 (뒤로가기 클릭 시 갤러리만 닫기 위해)
+        window.history.pushState({page: "gallery"}, "gallery", "#gallery");
+    }
+
+    // 2. 사진 변경 로직 (좌우 버튼)
+    function changePhoto(step) {
+        currentIndex += step;
+        if (currentIndex < 0) currentIndex = allImages.length - 1;
+        if (currentIndex >= allImages.length) currentIndex = 0;
+        updateModalPhoto();
+    }
+
+    function updateModalPhoto() {
+        document.getElementById('modalImg').src = allImages[currentIndex];
+        document.getElementById('galleryIndex').innerText = (currentIndex + 1) + " / " + allImages.length;
+    }
+
+    // 3. 갤러리 닫기
+    function closeGallery() {
+        document.getElementById('galleryModal').style.display = 'none';
+        // 만약 주소창에 #gallery가 남아있다면 뒤로가기 실행
+        if (window.location.hash === "#gallery") {
+            window.history.back();
         }
     }
 
-    // 2. 사진 열기 기능 (우클릭/롱클릭 방지 추가)
-    function openGallery(el) {
-        const modal = document.getElementById('galleryModal');
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = el.src;
-        modal.style.display = 'flex';
+    // 4. 뒤로가기 버튼 감지 이벤트
+    window.onpopstate = function(event) {
+        // 뒤로가기 시 모달이 열려있다면 모달만 닫음
+        document.getElementById('galleryModal').style.display = 'none';
+    };
 
-        // 모달이 열려있는 동안 우클릭(롱클릭) 메뉴 방지
-        window.oncontextmenu = function() { return false; };
-    }
-
-    // 모달 닫을 때 우클릭 방지 해제 (필요시)
-    document.getElementById('galleryModal').addEventListener('click', function() {
-        window.oncontextmenu = null;
+    // 스와이프(밀기) 기능 추가 (모바일용)
+    let touchStartX = 0;
+    document.getElementById('galleryModal').addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    document.getElementById('galleryModal').addEventListener('touchend', e => {
+        let touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) changePhoto(1);  // 왼쪽으로 밀면 다음 사진
+        if (touchEndX - touchStartX > 50) changePhoto(-1); // 오른쪽으로 밀면 이전 사진
     });
 </script>
         
@@ -467,6 +489,7 @@
     </script>
 </body>
 </html>
+
 
 
 
