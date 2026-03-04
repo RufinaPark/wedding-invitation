@@ -66,6 +66,68 @@
         .contact-name { flex-grow: 1; font-weight: bold; }
         .contact-icons a { text-decoration: none; margin-left: 15px; font-size: 20px; }
 
+        /* 기존 스타일 유지 */
+        body { font-family: 'Nanum Myeongjo', serif; text-align: center; margin: 0; padding: 0; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; }
+        section { padding: 60px 0; border-bottom: 1px solid #eee; }
+        h2 { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 40px; }
+
+        /* [수정] 달력 섹션 스타일 */
+        .calendar-container {
+            display: inline-block; /* 가운데 정렬을 위해 인라인 블록 설정 */
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .calendar-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .calendar-table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .calendar-table th, .calendar-table td {
+            width: 45px;
+            height: 45px;
+            padding: 5px;
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        /* 요일 헤더 스타일 */
+        .calendar-table th {
+            font-weight: normal;
+            color: #333;
+            padding-bottom: 15px;
+        }
+
+        /* [요청사항] 일요일은 빨간색 글씨 */
+        .calendar-table th:first-child, 
+        .calendar-table td:first-child {
+            color: #d9534f; /* 일요일 빨간색 */
+        }
+
+        /* [요청사항] 5일 동그라미 강조 디자인 */
+        .selected-day {
+            background-color: #1a1f3c; /* 어두운 네이비 배경 */
+            color: #fff !important;    /* 글자색 흰색 */
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            display: inline-block;
+            border-radius: 50%;        /* 완전한 원형 */
+            font-weight: bold;
+        }
+        
+        /* 1일 위치 조정을 위한 빈 칸 처리 */
+        .empty-cell { width: 45px; }
+
+        
         /* 계좌번호 및 기타 스타일 */
         .btn-box { background: #f4f4f4; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
         .hidden-content { display: none; padding: 10px; background: #fff; border: 1px solid #eee; }
@@ -170,33 +232,36 @@
         </div>
 
 <section>
-            <h2>CALENDAR</h2>
-            <div class="calendar-title">2026. 07</div>
-            <table class="calendar-table">
-                <thead>
-                    <tr>
-                        <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td><td></td><td></td>
-                        <td><span class="event-day">1</span></td> <td>2</td><td>3</td><td>4</td>
-                    </tr>
-                    <tr>
-                        <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
-                    </tr>
-                    <tr>
-                        <td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
-                    </tr>
-                    <tr>
-                        <td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
-                    </tr>
-                    <tr>
-                        <td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td>
-                    </tr>
-                </tbody>
-            </table>
+<h2>CALENDAR</h2>
+            <div class="calendar-container">
+                <div class="calendar-header">2026. 07</div>
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="empty-cell"></td><td class="empty-cell"></td><td class="empty-cell"></td>
+                            <td>1</td><td>2</td><td>3</td><td>4</td>
+                        </tr>
+                        <tr>
+                            <td><span class="selected-day">5</span></td>
+                            <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+                        </tr>
+                        <tr>
+                            <td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
+                        </tr>
+                        <tr>
+                            <td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+                        </tr>
+                        <tr>
+                            <td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section>
@@ -265,5 +330,6 @@
     </script>
 </body>
 </html>
+
 
 
