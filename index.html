@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우리의 결혼식에 초대합니다</title>
+    <title>유재혁 ♡ 박소희 저희 결혼합니다</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -59,12 +59,43 @@
         </section>
 
         <section>
-            <h2>CONTACT</h2>
-            <div class="btn-box" onclick="toggleContent('contact-info')">연락처 보기</div>
-            <div id="contact-info" class="hidden-content">
-                <p>신랑 유재혁: 010-0000-0000</p>
-                <p>신부 박소희: 010-1111-1111</p>
-            </div>
+<div class="contact-summary">
+  <div class="parent-row">
+    유병서 · 김미숙 <span class="relation">아들</span> <span class="name">유Oㅣ재혁</span>
+  </div>
+  <div class="parent-row">
+    박성오 · 김미경 <span class="relation">딸</span> <span class="name">박소희</span>
+  </div>
+  
+  <button id="contactBtn" class="main-contact-btn">연락하기</button>
+</div>
+
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span>연락하기</span>
+      <button class="close-btn">&times;</button>
+    </div>
+    
+    <div class="contact-list">
+      <div class="contact-item">
+        <span class="label">신랑</span> <span class="name">유재혁</span>
+        <div class="icons">
+          <a href="tel:01012345678"><img src="phone-icon.png" alt="전화"></a>
+          <a href="sms:01012345678"><img src="sms-icon.png" alt="문자"></a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="label">신랑 아버지</span> <span class="name">유병서</span>
+        <div class="icons">
+          <a href="tel:01000000000"><img src="phone-icon.png" alt="전화"></a>
+          <a href="sms:01000000000"><img src="sms-icon.png" alt="문자"></a>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
+
         </section>
 
         <section>
@@ -73,13 +104,13 @@
             </section>
 
         <section>
-            <h2>LOCATION</h2>
+            <h2>오시는 길</h2>
             <p>서울 강남구 ... 웨딩홀</p>
             <a href="https://map.kakao.com/" style="text-decoration:none; color:#333; border:1px solid #333; padding:10px 20px;">카카오맵 열기</a>
         </section>
 
         <section>
-            <h2>ACCOUNT</h2>
+            <h2>마음 전하실 곳</h2>
             <div class="btn-box" onclick="toggleContent('acc-groom')">신랑측 마음 전하실 곳</div>
             <div id="acc-groom" class="hidden-content">
                 국민은행 123-456-789 (김철수) <button onclick="copyAcc('123456789')">복사</button>
@@ -120,3 +151,4 @@
 </body>
 
 </html>
+
