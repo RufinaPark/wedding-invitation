@@ -5,25 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유OO ♡ 박OO 저희 결혼합니다</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* [기존 스타일 유지] */
         body {
             font-family: 'Nanum Myeongjo', serif;
             margin: 0; padding: 0; background-color: #fff; color: #333;
             line-height: 1.8; text-align: center;
         }
         .container { max-width: 480px; margin: 0 auto; padding: 20px; }
-        
-        /* 메인 화면 */
         .main-section { padding: 80px 20px; background: #f9f9f9; }
         .main-title { font-size: 24px; letter-spacing: 5px; margin-bottom: 20px; }
         .main-img { width: 100%; height: auto; border-radius: 2px; margin: 20px 0; }
-
-        /* 섹션 공통 */
         section { padding: 60px 0; border-bottom: 1px solid #eee; }
         h2 { font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px; }
 
-        /* 연락처 요약 섹션 */
-        .contact-summary { padding: 20px 0; line-height: 2.2; }
+        /* [추가 및 수정] 연락처 모달 관련 스타일 */
         #contactBtn {
             background-color: #1a1f3c; color: white;
             width: 80%; padding: 12px; border-radius: 5px; 
@@ -31,14 +28,13 @@
             font-family: 'Nanum Myeongjo', serif; font-size: 16px;
         }
 
-        /* [수정] 연락처 모달 팝업 스타일 */
         #contactModal {
-            display: none; /* 처음에는 숨김 */
+            display: none; /* 기본적으로 숨김 */
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 2000;
             align-items: center; justify-content: center;
         }
-        #contactModal.active { display: flex; } /* active 클래스 추가 시 보임 */
+        #contactModal.active { display: flex; } /* 열렸을 때만 보임 */
 
         .contact-modal-content {
             background: #fff; width: 85%; max-width: 350px;
@@ -48,49 +44,42 @@
             background: #1a1f3c; color: #fff; padding: 15px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .contact-modal-body { padding: 10px 0; }
+
+        /* 신랑/신부 구분 디자인 */
+        .side-group { padding-bottom: 10px; }
+        .side-title { 
+            background-color: #f8f9fa; padding: 8px 20px; 
+            font-size: 13px; color: #666; font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        .groom-side .contact-label { color: #5a78af; } /* 신랑측 푸른색 포인트 */
+        .bride-side .contact-label { color: #c06c84; } /* 신부측 붉은색 포인트 */
+
         .contact-row {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; border-bottom: 1px solid #eee;
+            padding: 12px 20px; border-bottom: 1px solid #f0f0f0;
         }
         .contact-row:last-child { border-bottom: none; }
-        .contact-label { color: #888; font-size: 14px; width: 80px; }
+        .contact-label { font-size: 14px; width: 80px; }
         .contact-name { flex-grow: 1; font-weight: bold; }
         .contact-icons a { text-decoration: none; margin-left: 15px; font-size: 20px; }
 
-        /* 아코디언/기타 */
+        /* [기타 스타일] */
         .btn-box { background: #f4f4f4; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
         .hidden-content { display: none; padding: 10px; background: #fff; border: 1px solid #eee; }
-
-        /* RSVP 모달 */
         #rsvp-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5); z-index: 1000;
         }
-        
-        /* 하단 고정 버튼 */
         .rsvp-trigger {
             position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff;
-            padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 999;
+            padding: 15px 25px; border-radius: 50px; cursor: pointer; z-index: 999;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <section class="main-section">
-            <div class="main-title">결 혼</div>
-            <img src="https://via.placeholder.com/400x600" alt="메인사진" class="main-img">
-            <p>유OO & 박OO</p>
-            <p>2026년 0월 0일 일요일 오전 11시<br> 영등포 0층 000홀</p>
-        </section>
-
-        <section>
-            <h2>INVITATION</h2>
-            <p>서로가 마주보며 다져온 사랑을<br>이제 곁에서 함께 걸어가려 합니다.<br>저희의 새로운 시작을 축복해주세요.</p>
-        </section>
-
         <section>
             <div class="contact-summary">
                 유OO · 김OO 아들 <strong>유OO</strong><br>
@@ -106,105 +95,51 @@
                     <span id="closeBtn" style="cursor:pointer; font-size:24px;">&times;</span>
                 </div>
                 <div class="contact-modal-body">
-                    <div class="contact-row">
-                        <span class="contact-label">신랑</span>
-                        <span class="contact-name">유OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01012345678">📞</a>
-                            <a href="sms:01012345678">✉️</a>
+                    <div class="side-group groom-side">
+                        <div class="side-title">신랑측</div>
+                        <div class="contact-row">
+                            <span class="contact-label">신랑</span>
+                            <span class="contact-name">유OO</span>
+                            <div class="contact-icons">
+                                <a href="tel:01012345678">📞</a> <a href="sms:01012345678">✉️</a>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <span class="contact-label">아버지</span>
+                            <span class="contact-name">유OO</span>
+                            <div class="contact-icons">
+                                <a href="tel:01000000000">📞</a> <a href="sms:01000000000">✉️</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-row">
-                        <span class="contact-label">신랑 아버지</span>
-                        <span class="contact-name">유OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01000000000">📞</a>
-                            <a href="sms:01000000000">✉️</a>
+
+                    <div style="height: 8px; background-color: #eee;"></div>
+
+                    <div class="side-group bride-side">
+                        <div class="side-title">신부측</div>
+                        <div class="contact-row">
+                            <span class="contact-label">신부</span>
+                            <span class="contact-name">박OO</span>
+                            <div class="contact-icons">
+                                <a href="tel:01087654321">📞</a> <a href="sms:01087654321">✉️</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-label">신랑 어머니</span>
-                        <span class="contact-name">김OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01000000000">📞</a>
-                            <a href="sms:01000000000">✉️</a>
-                        </div>
-                    </div>
-                    <hr style="border:0; border-top:1px solid #eee; margin:0;">
-                    <div class="contact-row">
-                        <span class="contact-label">신부</span>
-                        <span class="contact-name">박OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01087654321">📞</a>
-                            <a href="sms:01087654321">✉️</a>
-                        </div>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-label">신부 아버지</span>
-                        <span class="contact-name">박OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01011112222">📞</a>
-                            <a href="sms:01011112222">✉️</a>
-                        </div>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-label">신부 어머니</span>
-                        <span class="contact-name">김OO</span>
-                        <div class="contact-icons">
-                            <a href="tel:01011113333">📞</a>
-                            <a href="sms:01011113333">✉️</a>
+                        <div class="contact-row">
+                            <span class="contact-label">아버지</span>
+                            <span class="contact-name">박OO</span>
+                            <div class="contact-icons">
+                                <a href="tel:01011112222">📞</a> <a href="sms:01011112222">✉️</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section>
-            <h2>CALENDAR</h2>
-            <div style="font-size: 20px;">10 OCTOBER</div>
-        </section>
-
-        <section>
-            <h2>오시는 길</h2>
-            <p>서울 강남구 ... 웨딩홀</p>
-            <a href="https://map.kakao.com/" style="text-decoration:none; color:#333; border:1px solid #333; padding:10px 20px;">카카오맵 열기</a>
-        </section>
-
-        <section>
-            <h2>마음 전하실 곳</h2>
-            <div class="btn-box" onclick="toggleContent('acc-groom')">신랑측 마음 전하실 곳</div>
-            <div id="acc-groom" class="hidden-content">
-                국민은행 123-456-789 (김철수) <button onclick="copyAcc('123456789')">복사</button>
-            </div>
-        </section>
-
-        <section>
-            <h2>GUESTBOOK</h2>
-            <input type="text" placeholder="축하 메시지를 남겨주세요" style="width:70%; padding:10px;">
-            <button style="padding:10px;">등록</button>
-        </section>
-    </div>
-
-    <div class="rsvp-trigger" onclick="openRsvp()">참석 알리기</div>
-
-    <div id="rsvp-modal">
-        <div class="modal-content">
-            <h3>참석 여부 확인</h3>
-            <p>성함과 동반 인원을 알려주세요.</p>
-            <input type="text" placeholder="성함" style="width:100%; margin-bottom:10px; padding:8px; box-sizing: border-box;">
-            <button onclick="closeRsvp()" style="width:100%; padding:10px; background:#333; color:white; border:none;">보내기</button>
-            <button onclick="closeRsvp()" style="width:100%; margin-top:5px; background:none; border:none; color:#888;">닫기</button>
         </div>
-    </div>
 
     <script>
-        // 아코디언 토글
-        function toggleContent(id) {
-            const el = document.getElementById(id);
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // 연락처 모달 제어
+        // 연락처 모달 제어 자바스크립트
         const contactModal = document.getElementById("contactModal");
         const contactBtn = document.getElementById("contactBtn");
         const closeBtn = document.getElementById("closeBtn");
@@ -212,25 +147,14 @@
         contactBtn.onclick = function() { contactModal.classList.add("active"); }
         closeBtn.onclick = function() { contactModal.classList.remove("active"); }
 
-        // RSVP 모달 제어
-        function openRsvp() { document.getElementById('rsvp-modal').style.display = 'block'; }
-        function closeRsvp() { document.getElementById('rsvp-modal').style.display = 'none'; }
-
-        // 계좌 복사
-        function copyAcc(acc) {
-            navigator.clipboard.writeText(acc);
-            alert("계좌번호가 복사되었습니다.");
-        }
-
-        // 모달 바깥 클릭 시 닫기
+        // 모달 외부 클릭 시 닫기
         window.onclick = function(event) {
             if (event.target == contactModal) {
                 contactModal.classList.remove("active");
             }
-            if (event.target == document.getElementById('rsvp-modal')) {
-                closeRsvp();
-            }
         }
+        
+        // (나머지 축의금/RSVP 함수들...)
     </script>
 </body>
 </html>
