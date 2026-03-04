@@ -23,12 +23,22 @@
         section { padding: 60px 0; border-bottom: 1px solid #eee; }
         h2 { font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px; }
 
-        /* 연락처 요약 영역 (1번 그림) */
-        .contact-summary { padding: 20px 0; line-height: 2.2; }
+/* [수정] 연락처 상단 텍스트 스타일 */
+        .contact-summary { padding: 20px 0; line-height: 2.5; font-size: 17px; }
+        
+        /* '아들', '딸' 글씨에만 다른 폰트와 스타일 적용 */
+        .emphasize-text {
+            font-family: 'Gowun Batang', serif; /* 부드러운 명조체 계열 */
+            font-size: 15px;
+            color: #666;
+            margin: 0 5px;
+            font-style: italic; /* 약간의 기울임으로 차별화 */
+        }
+
         #contactBtn {
             background-color: #1a1f3c; color: white;
-            width: 80%; padding: 12px; border-radius: 5px; 
-            border: none; margin-top: 15px; cursor: pointer;
+            width: 85%; padding: 12px; border-radius: 5px; 
+            border: none; margin-top: 20px; cursor: pointer;
             font-family: 'Nanum Myeongjo', serif; font-size: 16px;
         }
 
@@ -330,6 +340,7 @@
     </script>
 </body>
 </html>
+
 
 
 
