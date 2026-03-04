@@ -317,6 +317,82 @@
 </section>
 
 
+        <section>
+    <h2>GALLERY</h2>
+    <div style="padding: 0 10px;">
+        <div id="gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=1" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=2" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=3" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=4" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=5" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=6" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=7" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=8" onclick="openGallery(this)"></div>
+            <div class="gallery-item"><img src="https://via.placeholder.com/400x400?text=9" onclick="openGallery(this)"></div>
+
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=10" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=11" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=12" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=13" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=14" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=15" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=16" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=17" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=18" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=19" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=20" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=21" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=22" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=23" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=24" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=25" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=26" onclick="openGallery(this)"></div>
+            <div class="gallery-item" style="display:none;"><img src="https://via.placeholder.com/400x400?text=27" onclick="openGallery(this)"></div>
+        </div>
+
+        <button id="loadMoreBtn" onclick="loadMorePhotos()" style="width: 100%; margin-top: 20px; padding: 12px; background: none; border: 1px solid #ddd; color: #888; cursor: pointer; font-family: 'Nanum Myeongjo', serif;">더보기 ∨</button>
+    </div>
+</section>
+
+<div id="galleryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center;" onclick="this.style.display='none'">
+    <img id="modalImg" src="" style="max-width: 95%; max-height: 90%; border-radius: 5px;">
+</div>
+
+<style>
+    /* 썸네일 이미지 공통 스타일 */
+    .gallery-item img {
+        width: 100%; height: 110px; object-fit: cover; border-radius: 2px; cursor: pointer; display: block;
+    }
+</style>
+
+<script>
+    // 사진 더보기 기능
+    function loadMorePhotos() {
+        const hiddenItems = document.querySelectorAll('.gallery-item[style*="display:none"]');
+        const loadCount = 9; // 한 번에 더 보여줄 사진 개수
+        
+        for (let i = 0; i < loadCount && i < hiddenItems.length; i++) {
+            hiddenItems[i].style.display = 'block';
+        }
+
+        // 더 이상 숨겨진 사진이 없으면 버튼 삭제
+        if (document.querySelectorAll('.gallery-item[style*="display:none"]').length === 0) {
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+    }
+
+    // 사진 확대 기능
+    function openGallery(el) {
+        const modal = document.getElementById('galleryModal');
+        const modalImg = document.getElementById('modalImg');
+        modalImg.src = el.src;
+        modal.style.display = 'flex';
+    }
+</script>
+        
+
         
         <section>
             <h2>방명록</h2>
@@ -365,6 +441,7 @@
     </script>
 </body>
 </html>
+
 
 
 
