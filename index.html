@@ -545,12 +545,114 @@
         
 
         
-        <section>
-            <h2>방명록</h2>
-            <input type="text" placeholder="축하 메시지를 남겨주세요" style="width:70%; padding:10px; border:1px solid #ccc; border-radius:3px;">
-            <button style="padding:10px 15px; background:#1a1f3c; color:#fff; border:none; border-radius:3px;">등록</button>
-        </section>
+        <section style="background-color: #f9f9f9; padding: 40px 20px;">
+    <h2>GUESTBOOK</h2>
+    
+    <div style="margin-bottom: 30px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+        <input type="text" id="guestName" placeholder="성함" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: 'Nanum Myeongjo';">
+        <textarea id="guestMsg" placeholder="축하 메시지를 남겨주세요" style="width: 100%; height: 80px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: 'Nanum Myeongjo'; resize: none;"></textarea>
+        <button onclick="addMessage()" style="width: 100%; margin-top: 10px; padding: 12px; background: #1a1f3c; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;">축하 메시지 남기기</button>
     </div>
+
+    <div id="guestbook-list">
+        <div class="guest-card">
+            <div class="card-header">
+                <span class="user-name">최수진</span>
+                <span class="reg-date">2026-03-05 10:53</span>
+            </div>
+            <div class="card-content">결혼 축하해~ 행복하게 잘 살아 ^^</div>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="sub-btn">더보기</button>
+        <button class="sub-btn">전체보기</button>
+    </div>
+</section>
+
+<style>
+    /* 방명록 카드 스타일 */
+    .guest-card {
+        background: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        text-align: left;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        border: 1px solid #f0f0f0;
+    }
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .user-name {
+        font-weight: bold;
+        font-size: 15px;
+        color: #333;
+    }
+    .reg-date {
+        font-size: 12px;
+        color: #aaa;
+    }
+    .card-content {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+    }
+    /* 하단 더보기 버튼 스타일 */
+    .sub-btn {
+        flex: 1;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid #ddd;
+        color: #666;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: 'Nanum Myeongjo';
+    }
+</style>
+
+<script>
+    function addMessage() {
+        const name = document.getElementById('guestName').value;
+        const msg = document.getElementById('guestMsg').value;
+        const list = document.getElementById('guestbook-list');
+
+        if (!name || !msg) {
+            alert("성함과 메시지를 모두 입력해 주세요.");
+            return;
+        }
+
+        // 현재 날짜 및 시간 생성
+        const now = new Date();
+        const dateStr = now.getFullYear() + '-' + 
+                        String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                        String(now.getDate()).padStart(2, '0') + ' ' + 
+                        String(now.getHours()).padStart(2, '0') + ':' + 
+                        String(now.getMinutes()).padStart(2, '0');
+
+        // 새 카드 생성
+        const newCard = document.createElement('div');
+        newCard.className = 'guest-card';
+        newCard.innerHTML = `
+            <div class="card-header">
+                <span class="user-name">${name}</span>
+                <span class="reg-date">${dateStr}</span>
+            </div>
+            <div class="card-content">${msg}</div>
+        `;
+
+        // 리스트 최상단에 추가
+        list.insertBefore(newCard, list.firstChild);
+
+        // 입력창 비우기
+        document.getElementById('guestName').value = '';
+        document.getElementById('guestMsg').value = '';
+    }
+</script>
 
     <div class="rsvp-trigger" onclick="openRsvp()">참석 알리기</div>
 
@@ -592,6 +694,7 @@
     </script>
 </body>
 </html>
+
 
 
 
