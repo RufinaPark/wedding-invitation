@@ -549,20 +549,15 @@
     <h2>GUESTBOOK</h2>
     
     <div style="margin-bottom: 30px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
-        <input type="text" id="guestName" placeholder="성함" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: 'Nanum Myeongjo';">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="guestName" placeholder="성함" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Nanum Myeongjo';">
+            <input type="password" id="guestPw" placeholder="비밀번호" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Nanum Myeongjo';">
+        </div>
         <textarea id="guestMsg" placeholder="축하 메시지를 남겨주세요" style="width: 100%; height: 80px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: 'Nanum Myeongjo'; resize: none;"></textarea>
         <button onclick="addMessage()" style="width: 100%; margin-top: 10px; padding: 12px; background: #1a1f3c; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;">축하 메시지 남기기</button>
     </div>
 
-    <div id="guestbook-list">
-        <div class="guest-card">
-            <div class="card-header">
-                <span class="user-name">최수진</span>
-                <span class="reg-date">2026-03-05 10:53</span>
-            </div>
-            <div class="card-content">결혼 축하해~ 행복하게 잘 살아 ^^</div>
-        </div>
-    </div>
+    <div id="guestbook-list"></div>
     
     <div style="display: flex; gap: 10px; margin-top: 20px;">
         <button class="sub-btn">더보기</button>
@@ -571,62 +566,38 @@
 </section>
 
 <style>
-    /* 방명록 카드 스타일 */
     .guest-card {
-        background: #fff;
-        border-radius: 5px;
-        padding: 15px;
-        margin-bottom: 15px;
-        text-align: left;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        border: 1px solid #f0f0f0;
+        background: #fff; border-radius: 5px; padding: 15px; margin-bottom: 15px;
+        text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;
+        position: relative;
     }
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .user-name { font-weight: bold; font-size: 15px; color: #333; }
+    .reg-date { font-size: 12px; color: #aaa; margin-right: 25px; } /* 삭제버튼 공간 확보 */
+    .card-content { font-size: 14px; color: #666; line-height: 1.5; }
+    
+    /* 삭제 버튼 (X) */
+    .delete-btn {
+        position: absolute; top: 12px; right: 12px;
+        color: #ccc; cursor: pointer; font-size: 18px; border: none; background: none; padding: 5px;
     }
-    .user-name {
-        font-weight: bold;
-        font-size: 15px;
-        color: #333;
-    }
-    .reg-date {
-        font-size: 12px;
-        color: #aaa;
-    }
-    .card-content {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.5;
-    }
-    /* 하단 더보기 버튼 스타일 */
-    .sub-btn {
-        flex: 1;
-        padding: 12px;
-        background: #fff;
-        border: 1px solid #ddd;
-        color: #666;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        font-family: 'Nanum Myeongjo';
-    }
+    .delete-btn:hover { color: #d9534f; }
+
+    .sub-btn { flex: 1; padding: 12px; background: #fff; border: 1px solid #ddd; color: #666; border-radius: 5px; cursor: pointer; font-family: 'Nanum Myeongjo'; }
 </style>
 
 <script>
     function addMessage() {
         const name = document.getElementById('guestName').value;
         const msg = document.getElementById('guestMsg').value;
+        const pw = document.getElementById('guestPw').value; // 비밀번호 가져오기
         const list = document.getElementById('guestbook-list');
 
-        if (!name || !msg) {
-            alert("성함과 메시지를 모두 입력해 주세요.");
+        if (!name || !msg || !pw) {
+            alert("성함, 비밀번호, 메시지를 모두 입력해 주세요.");
             return;
         }
 
-        // 현재 날짜 및 시간 생성
         const now = new Date();
         const dateStr = now.getFullYear() + '-' + 
                         String(now.getMonth() + 1).padStart(2, '0') + '-' + 
@@ -634,23 +605,42 @@
                         String(now.getHours()).padStart(2, '0') + ':' + 
                         String(now.getMinutes()).padStart(2, '0');
 
-        // 새 카드 생성
         const newCard = document.createElement('div');
         newCard.className = 'guest-card';
+        // 비밀번호를 데이터 속성(data-pw)에 숨겨서 저장합니다.
+        newCard.setAttribute('data-pw', pw);
         newCard.innerHTML = `
             <div class="card-header">
                 <span class="user-name">${name}</span>
-                <span class="reg-date">${dateStr}</span>
+                <div>
+                    <span class="reg-date">${dateStr}</span>
+                    <button class="delete-btn" onclick="deleteMessage(this)">&times;</button>
+                </div>
             </div>
             <div class="card-content">${msg}</div>
         `;
 
-        // 리스트 최상단에 추가
         list.insertBefore(newCard, list.firstChild);
 
         // 입력창 비우기
         document.getElementById('guestName').value = '';
         document.getElementById('guestMsg').value = '';
+        document.getElementById('guestPw').value = '';
+    }
+
+    function deleteMessage(btn) {
+        const card = btn.closest('.guest-card');
+        const savedPw = card.getAttribute('data-pw');
+        const inputPw = prompt("비밀번호를 입력하세요 (본인만 삭제 가능)");
+
+        if (inputPw === savedPw) {
+            if(confirm("이 메시지를 삭제하시겠습니까?")) {
+                card.remove();
+                alert("삭제되었습니다.");
+            }
+        } else if (inputPw !== null) {
+            alert("비밀번호가 일치하지 않습니다.");
+        }
     }
 </script>
 
@@ -694,6 +684,7 @@
     </script>
 </body>
 </html>
+
 
 
 
