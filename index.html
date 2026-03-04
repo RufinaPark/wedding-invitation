@@ -369,28 +369,6 @@
     </div>
 </section>
 
-<section>
-    <h2>GALLERY</h2>
-    <div style="padding: 0 10px;">
-        <div id="gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; justify-items: center;">
-            
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/1.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/2.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/3.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/4.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/5.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/6.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/7.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/8.jpg"></div>
-            <div class="gallery-item"><img src="https://raw.githubusercontent.com/사용자/저장소/main/9.jpg"></div>
-
-            <div class="gallery-item" style="display:none;"><img src="https://raw.githubusercontent.com/사용자/저장소/main/10.jpg"></div>
-            <div class="gallery-item" style="display:none;"><img src="https://raw.githubusercontent.com/사용자/저장소/main/27.jpg"></div>
-        </div>
-
-        <button id="loadMoreBtn" onclick="loadMorePhotos()" style="width: 100%; margin-top: 20px; padding: 12px; background: none; border: 1px solid #ddd; color: #888; cursor: pointer; font-family: 'Nanum Myeongjo', serif;">더보기 ∨</button>
-    </div>
-</section>
 
 <div id="galleryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; align-items: center; justify-content: center; touch-action: none;" onclick="closeGallery()">
     <div onclick="event.stopPropagation(); changePhoto(-1);" style="position: absolute; left: 10px; color: white; font-size: 40px; cursor: pointer; padding: 20px;">‹</div>
@@ -523,6 +501,7 @@
     </script>
 </body>
 </html>
+
 
 
 
