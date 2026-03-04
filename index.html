@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유OO ♥ 박OO 저희 결혼합니다</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* 기본 스타일 */
+        /* [1] 기본 스타일 */
         body {
             font-family: 'Nanum Myeongjo', serif;
             margin: 0; padding: 0; background-color: #fff; color: #333;
             line-height: 1.8; text-align: center;
         }
         .container { max-width: 480px; margin: 0 auto; padding: 20px; }
-        
-        /* 메인 섹션 */
+        section { padding: 60px 0; border-bottom: 1px solid #eee; }
+        h2 { font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px; }
+
+        /* [2] 메인 섹션 */
         .main-section { padding: 80px 20px; background: #f9f9f9; }
         .main-title { font-size: 24px; letter-spacing: 5px; margin-bottom: 20px; }
         .main-img { width: 100%; height: auto; border-radius: 2px; margin: 20px 0; }
 
-        /* 공통 섹션 스타일 */
-        section { padding: 60px 0; border-bottom: 1px solid #eee; }
-        h2 { font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px; }
-
-/* [수정] 연락처 상단 텍스트 스타일 */
+        /* [3] 연락처 섹션 */
         .contact-summary { padding: 20px 0; line-height: 2.5; font-size: 17px; }
-        
-        /* '아들', '딸' 글씨에만 다른 폰트와 스타일 적용 */
         .emphasize-text {
-            font-family: 'Gowun Batang', serif; /* 부드러운 명조체 계열 */
-            font-size: 14px;
-            color: #666;
-            margin: 0 5px;
+            font-family: 'Gowun Batang', serif;
+            font-size: 14px; color: #666; margin: 0 5px;
         }
-
         #contactBtn {
             background-color: #1a1f3c; color: white;
             width: 85%; padding: 12px; border-radius: 5px; 
@@ -44,15 +37,13 @@
             font-family: 'Nanum Myeongjo', serif; font-size: 16px;
         }
 
-        /* 연락처 모달 팝업 (2번 그림) */
+        /* [4] 연락처 모달 */
         #contactModal {
-            display: none; /* 초기 상태 숨김 */
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 2000;
             align-items: center; justify-content: center;
         }
-        #contactModal.active { display: flex; } /* 클릭 시 보임 */
-
+        #contactModal.active { display: flex; }
         .contact-modal-content {
             background: #fff; width: 85%; max-width: 350px;
             border-radius: 10px; overflow: hidden; text-align: left;
@@ -67,8 +58,6 @@
             font-size: 13px; color: #666; font-weight: bold;
             border-bottom: 1px solid #eee;
         }
-        .groom-side .contact-label { color: #5a78af; }
-        .bride-side .contact-label { color: #c06c84; }
         .contact-row {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 20px; border-bottom: 1px solid #f0f0f0;
@@ -77,70 +66,27 @@
         .contact-label { font-size: 14px; width: 80px; }
         .contact-name { flex-grow: 1; font-weight: bold; }
         .contact-icons a { text-decoration: none; margin-left: 15px; font-size: 20px; }
+        .groom-side .contact-label { color: #5a78af; }
+        .bride-side .contact-label { color: #c06c84; }
 
-        /* 기존 스타일 유지 */
-        body { font-family: 'Nanum Myeongjo', serif; text-align: center; margin: 0; padding: 0; }
-        .container { max-width: 480px; margin: 0 auto; padding: 20px; }
-        section { padding: 60px 0; border-bottom: 1px solid #eee; }
-        h2 { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 40px; }
-
-        /* [수정] 달력 섹션 스타일 */
-        .calendar-container {
-            display: inline-block; /* 가운데 정렬을 위해 인라인 블록 설정 */
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .calendar-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #333;
-        }
-
-        .calendar-table {
-            border-collapse: collapse;
-            margin: 0 auto;
-        }
-
+        /* [5] 달력 섹션 */
+        .calendar-container { display: inline-block; margin: 0 auto; text-align: center; }
+        .calendar-header { font-size: 18px; font-weight: bold; margin-bottom: 25px; color: #333; }
+        .calendar-table { border-collapse: collapse; margin: 0 auto; }
         .calendar-table th, .calendar-table td {
-            width: 45px;
-            height: 45px;
-            padding: 5px;
-            font-size: 16px;
-            vertical-align: middle;
+            width: 45px; height: 45px; padding: 5px; font-size: 16px; vertical-align: middle;
         }
-
-        /* 요일 헤더 스타일 */
-        .calendar-table th {
-            font-weight: normal;
-            color: #333;
-            padding-bottom: 15px;
-        }
-
-        /* [요청사항] 일요일은 빨간색 글씨 */
+        .calendar-table th { font-weight: normal; color: #333; padding-bottom: 15px; }
         .calendar-table th:first-child, 
-        .calendar-table td:first-child {
-            color: #d9534f; /* 일요일 빨간색 */
-        }
-
-        /* [요청사항] 5일 동그라미 강조 디자인 */
+        .calendar-table td:first-child { color: #d9534f; }
         .selected-day {
-            background-color: #1a1f3c; /* 어두운 네이비 배경 */
-            color: #fff !important;    /* 글자색 흰색 */
-            width: 32px;
-            height: 32px;
-            line-height: 32px;
-            display: inline-block;
-            border-radius: 50%;        /* 완전한 원형 */
-            font-weight: bold;
+            background-color: #1a1f3c; color: #fff !important; 
+            width: 32px; height: 32px; line-height: 32px;
+            display: inline-block; border-radius: 50%; font-weight: bold;
         }
-        
-        /* 1일 위치 조정을 위한 빈 칸 처리 */
         .empty-cell { width: 45px; }
 
-        
-        /* 계좌번호 및 기타 스타일 */
+        /* [6] 기타 UI */
         .btn-box { background: #f4f4f4; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
         .hidden-content { display: none; padding: 10px; background: #fff; border: 1px solid #eee; }
         #rsvp-modal {
@@ -165,7 +111,7 @@
             <div class="main-title">결 혼</div>
             <img src="https://via.placeholder.com/400x600" alt="메인사진" class="main-img">
             <p>유OO & 박OO</p>
-            <p>2026년 0월 0일 일요일 오전 11시<br> 영등포 0층 000홀</p>
+            <p>2026년 07월 05일 일요일 오전 11시<br> 영등포 0층 000홀</p>
         </section>
 
         <section>
@@ -192,21 +138,14 @@
                         <div class="side-title">신랑측</div>
                         <div class="contact-row">
                             <span class="contact-label">신랑</span>
-                            <span class="contact-name">   유OO</span>
+                            <span class="contact-name">유OO</span>
                             <div class="contact-icons">
                                 <a href="tel:01012345678">📞</a> <a href="sms:01012345678">✉️</a>
                             </div>
                         </div>
                         <div class="contact-row">
                             <span class="contact-label">신랑 아버지</span>
-                            <span class="contact-name">   유OO</span>
-                            <div class="contact-icons">
-                                <a href="tel:01000000000">📞</a> <a href="sms:01000000000">✉️</a>
-                            </div>
-                        </div>
-                        <div class="contact-row">
-                            <span class="contact-label">신랑 어머니</span>
-                            <span class="contact-name">   김OO</span>
+                            <span class="contact-name">유OO</span>
                             <div class="contact-icons">
                                 <a href="tel:01000000000">📞</a> <a href="sms:01000000000">✉️</a>
                             </div>
@@ -231,20 +170,13 @@
                                 <a href="tel:01011112222">📞</a> <a href="sms:01011112222">✉️</a>
                             </div>
                         </div>
-                        <div class="contact-row">
-                            <span class="contact-label">신부 어머니</span>
-                            <span class="contact-name">김OO</span>
-                            <div class="contact-icons">
-                                <a href="tel:01011113333">📞</a> <a href="sms:01011113333">✉️</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-<section>
-<h2>CALENDAR</h2>
+        <section>
+            <h2>CALENDAR</h2>
             <div class="calendar-container">
                 <div class="calendar-header">2026. 07</div>
                 <table class="calendar-table">
@@ -276,91 +208,69 @@
             </div>
         </section>
 
+        <section style="text-align: center;">
+            <h2 style="font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px;">오시는 길</h2>
+            <p>서울 영등포구 영중로 55</p>
 
-        <section>
-            <section style="padding: 20px 0; border-bottom: 1px solid #eee; text-align: center;">
-    <h2 style="font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px;">오시는 길</h2>
-    <p>서울 영등포구 영중로 55</p>
+            <div style="width: 100%; height: 320px; margin-bottom: 20px; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+                <iframe src="https://map.kakao.com/link/map/서울 영등포구 영중로 55,37.525531,126.907031" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>
+            </div>
 
-    <div style="width: 100%; height: 320px; margin-bottom: 20px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; position: relative;">
-        <iframe 
-            src="https://map.kakao.com/link/map/서울 영등포구 영중로 55,37.525531,126.907031" 
-            width="100%" 
-            height="100%" 
-            frameborder="0" 
-            style="border:0;" 
-            allowfullscreen>
-        </iframe>
-    </div>
+            <div style="display: flex; justify-content: space-around; gap: 5px; margin-bottom: 40px;">
+                <a href="https://map.kakao.com/link/to/웨딩그룹위더스 영등포,37.5255,126.9070" target="_blank" style="flex:1; border:1px solid #ddd; padding:12px 0; text-decoration:none; color:#333; font-size:13px; border-radius:5px; background:#fff;">카카오내비</a>
+                <a href="https://tmap.life/웨딩그룹위더스영등포" target="_blank" style="flex:1; border:1px solid #ddd; padding:12px 0; text-decoration:none; color:#333; font-size:13px; border-radius:5px; background:#fff;">티맵</a>
+                <a href="https://map.naver.com/v5/search/웨딩그룹위더스영등포" target="_blank" style="flex:1; border:1px solid #ddd; padding:12px 0; text-decoration:none; color:#333; font-size:13px; border-radius:5px; background:#fff;">네이버지도</a>
+            </div>
 
-    <div style="display: flex; justify-content: space-around; width: 100%; margin: 0 auto; gap: 5px; margin-bottom: 40px;">
-        <a href="https://map.kakao.com/link/to/웨딩그룹위더스 영등포,37.5255,126.9070" target="_blank" style="flex: 1; border: 1px solid #ddd; padding: 12px 0; text-decoration: none; color: #333; font-size: 13px; border-radius: 5px; display: flex; align-items: center; justify-content: center; background-color: #fff;">
-            <span style="color: #fee500; margin-right: 6px; font-size: 14px;">●</span> 카카오내비
-        </a>
-        <a href="https://tmap.life/웨딩그룹위더스영등포" target="_blank" style="flex: 1; border: 1px solid #ddd; padding: 12px 0; text-decoration: none; color: #333; font-size: 13px; border-radius: 5px; display: flex; align-items: center; justify-content: center; background-color: #fff;">
-            <span style="color: #3182f6; margin-right: 6px; font-weight: bold;">T</span> 티맵
-        </a>
-        <a href="https://map.naver.com/v5/search/웨딩그룹위더스영등포" target="_blank" style="flex: 1; border: 1px solid #ddd; padding: 12px 0; text-decoration: none; color: #333; font-size: 13px; border-radius: 5px; display: flex; align-items: center; justify-content: center; background-color: #fff;">
-            <span style="color: #03cf5d; margin-right: 6px; font-weight: bold;">N</span> 네이버지도
-        </a>
-    </div>
+            <div style="text-align: left; width: 95%; margin: 0 auto; padding-top: 20px;">
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1px;">
+                        <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">subway</span>
+                        <strong style="font-size: 16px; color: #333;">지하철 이용 시</strong>
+                    </div>
+                    <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
+                        <span style="color: #A05EB5; font-weight: bold;">5호선</span> 영등포시장역 4번 출구 (도보 2분)<br>
+                        <span style="color: #0052A4; font-weight: bold;">1호선</span> 영등포역 6번 출구 (도보 15분)
+                    </p>
+                </div>
 
+                <div style="margin-bottom: 30px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1px;">
+                        <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">directions_bus</span>
+                        <strong style="font-size: 16px; color: #333;">버스 이용 시</strong>
+                    </div>
+                    <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
+                        <span style="display: inline-block; width: 40px; font-weight: bold;">일반</span> 5, 60, 60-3, 88<br>
+                        <span style="display: inline-block; width: 40px; font-weight: bold;">간선</span> 605, 661, 761<br>
+                        <span style="display: inline-block; width: 40px; font-weight: bold;">지선</span> 5616, 5714, 6514
+                    </p>
+                </div>
 
-
-                
-<div style="text-align: left; width: 95%; margin: 0 auto; padding-top: 20px; font-family: 'Noto Sans KR', sans-serif;">
-    
-    <div style="margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; margin-bottom: 1px;">
-            <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">subway</span>
-            <strong style="font-size: 16px; color: #333;">지하철 이용 시</strong>
-        </div>
-        <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
-            <span style="color: #A05EB5; font-weight: bold;">5호선</span> 영등포시장역 4번 출구 (도보 2분)<br>
-            <span style="color: #0052A4; font-weight: bold;">1호선</span> 영등포역 6번 출구 (도보 15분)
-        </p>
-    </div>
-
-    <div style="margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; margin-bottom: 1px;">
-            <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">directions_bus</span>
-            <strong style="font-size: 16px; color: #333;">버스 이용 시</strong>
-        </div>
-        <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
-            <span style="display: inline-block; width: 40px; font-weight: bold;">일반</span> 5, 60, 60-3, 88<br>
-            <span style="display: inline-block; width: 40px; font-weight: bold;">간선</span> 605, 661, 761<br>
-            <span style="display: inline-block; width: 40px; font-weight: bold;">지선</span> 5616, 5714, 6514
-        </p>
-    </div>
-
-    <div style="margin-bottom: 20px;">
-        <div style="display: flex; align-items: center; margin-bottom: 1px;">
-            <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">directions_car</span>
-            <strong style="font-size: 16px; color: #333;">자차 이용 시</strong>
-        </div>
-        <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
-            건물 내 지하주차장 <strong style="color: #333;">2시간</strong> 무료 주차
-        </p>
-    </div>
-</div>
-    </div>
-</section>
-
-
-        
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1px;">
+                        <span class="material-icons" style="font-size: 22px; color: #555; margin-right: 8px;">directions_car</span>
+                        <strong style="font-size: 16px; color: #333;">자차 이용 시</strong>
+                    </div>
+                    <p style="font-size: 14px; color: #666; line-height: 1.8; margin-left: 5px;">
+                        건물 내 지하주차장 <strong style="color: #333;">2시간</strong> 무료 주차
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <section>
             <h2>마음 전하실 곳</h2>
             <div class="btn-box" onclick="toggleContent('acc-groom')">신랑측 마음 전하실 곳</div>
             <div id="acc-groom" class="hidden-content">
-                국민은행 123-456-789 (김철수) <button onclick="copyAcc('123456789')">복사</button>
+                국민은행 123-456-789 (김철수) 
+                <button onclick="copyAcc('123456789')" style="margin-left:5px; padding:2px 8px; cursor:pointer;">복사</button>
             </div>
         </section>
 
         <section>
             <h2>GUESTBOOK</h2>
-            <input type="text" placeholder="축하 메시지를 남겨주세요" style="width:70%; padding:10px;">
-            <button style="padding:10px;">등록</button>
+            <input type="text" placeholder="축하 메시지를 남겨주세요" style="width:70%; padding:10px; border:1px solid #ccc; border-radius:3px;">
+            <button style="padding:10px 15px; background:#1a1f3c; color:#fff; border:none; border-radius:3px;">등록</button>
         </section>
     </div>
 
@@ -377,13 +287,11 @@
     </div>
 
     <script>
-        // 아코디언 제어
         function toggleContent(id) {
             const el = document.getElementById(id);
             el.style.display = (el.style.display === 'block') ? 'none' : 'block';
         }
 
-        // 연락처 모달 제어 (1, 2번 그림 기능)
         const contactModal = document.getElementById("contactModal");
         const contactBtn = document.getElementById("contactBtn");
         const closeBtn = document.getElementById("closeBtn");
@@ -391,17 +299,14 @@
         contactBtn.onclick = function() { contactModal.classList.add("active"); }
         closeBtn.onclick = function() { contactModal.classList.remove("active"); }
 
-        // RSVP 모달 제어
         function openRsvp() { document.getElementById('rsvp-modal').style.display = 'block'; }
         function closeRsvp() { document.getElementById('rsvp-modal').style.display = 'none'; }
 
-        // 계좌 복사
         function copyAcc(acc) {
             navigator.clipboard.writeText(acc);
             alert("계좌번호가 복사되었습니다.");
         }
 
-        // 배경 클릭 시 모달 닫기
         window.onclick = function(event) {
             if (event.target == contactModal) { contactModal.classList.remove("active"); }
             if (event.target == document.getElementById('rsvp-modal')) { closeRsvp(); }
@@ -409,31 +314,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
