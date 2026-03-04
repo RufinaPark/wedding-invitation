@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우리의 결혼식에 초대합니다</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nanum Myeongjo', serif;
+            margin: 0; padding: 0; background-color: #fff; color: #333;
+            line-height: 1.8; text-align: center;
+        }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; }
+        
+        /* 메인 화면 */
+        .main-section { padding: 80px 20px; background: #f9f9f9; }
+        .main-title { font-size: 24px; letter-spacing: 5px; margin-bottom: 20px; }
+        .main-img { width: 100%; height: auto; border-radius: 2px; margin: 20px 0; }
+
+        /* 섹션 공통 */
+        section { padding: 60px 0; border-bottom: 1px solid #eee; }
+        h2 { font-size: 18px; color: #888; margin-bottom: 30px; letter-spacing: 2px; }
+
+        /* 연락처/축의금 아코디언 */
+        .btn-box { background: #f4f4f4; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
+        .hidden-content { display: none; padding: 10px; background: #fff; border: 1px solid #eee; }
+
+        /* 팝업 스타일 */
+        #rsvp-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+        }
+        .modal-content {
+            background: #fff; width: 80%; max-width: 350px; margin: 100px auto;
+            padding: 30px; border-radius: 10px; text-align: left;
+        }
+        
+        /* 하단 고정 버튼 */
+        .rsvp-trigger {
+            position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff;
+            padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <section class="main-section">
+            <div class="main-title">결 혼</div>
+            <img src="https://via.placeholder.com/400x600" alt="메인사진" class="main-img">
+            <p>김철수 & 이영희</p>
+            <p>2025년 10월 25일 토요일 오후 1시<br>아름다운 웨딩홀 1층</p>
+        </section>
+
+        <section>
+            <h2>INVITATION</h2>
+            <p>서로가 마주보며 다져온 사랑을<br>이제 곁에서 함께 걸어가려 합니다.<br>저희의 새로운 시작을 축복해주세요.</p>
+        </section>
+
+        <section>
+            <h2>CONTACT</h2>
+            <div class="btn-box" onclick="toggleContent('contact-info')">연락처 보기</div>
+            <div id="contact-info" class="hidden-content">
+                <p>신랑 김철수: 010-0000-0000</p>
+                <p>신부 이영희: 010-1111-1111</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>CALENDAR</h2>
+            <div style="font-size: 20px;">10 OCTOBER</div>
+            </section>
+
+        <section>
+            <h2>LOCATION</h2>
+            <p>서울 강남구 ... 웨딩홀</p>
+            <a href="https://map.kakao.com/" style="text-decoration:none; color:#333; border:1px solid #333; padding:10px 20px;">카카오맵 열기</a>
+        </section>
+
+        <section>
+            <h2>ACCOUNT</h2>
+            <div class="btn-box" onclick="toggleContent('acc-groom')">신랑측 마음 전하실 곳</div>
+            <div id="acc-groom" class="hidden-content">
+                국민은행 123-456-789 (김철수) <button onclick="copyAcc('123456789')">복사</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>GUESTBOOK</h2>
+            <input type="text" placeholder="축하 메시지를 남겨주세요" style="width:80%; padding:10px;">
+            <button style="padding:10px;">등록</button>
+        </section>
+    </div>
+
+    <div class="rsvp-trigger" onclick="openModal()">참석 알리기</div>
+
+    <div id="rsvp-modal">
+        <div class="modal-content">
+            <h3>참석 여부 확인</h3>
+            <p>성함과 동반 인원을 알려주세요.</p>
+            <input type="text" placeholder="성함" style="width:100%; margin-bottom:10px; padding:8px;">
+            <button onclick="closeModal()" style="width:100%; padding:10px; background:#333; color:#white; border:none;">보내기</button>
+            <button onclick="closeModal()" style="width:100%; margin-top:5px; background:none; border:none; color:#888;">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+        function openModal() { document.getElementById('rsvp-modal').style.display = 'block'; }
+        function closeModal() { document.getElementById('rsvp-modal').style.display = 'none'; }
+        function copyAcc(acc) {
+            navigator.clipboard.writeText(acc);
+            alert("계좌번호가 복사되었습니다.");
+        }
+    </script>
+</body>
+</html>
