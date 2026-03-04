@@ -29,10 +29,9 @@
         /* '아들', '딸' 글씨에만 다른 폰트와 스타일 적용 */
         .emphasize-text {
             font-family: 'Gowun Batang', serif; /* 부드러운 명조체 계열 */
-            font-size: 15px;
+            font-size: 14px;
             color: #666;
             margin: 0 5px;
-            font-style: italic; /* 약간의 기울임으로 차별화 */
         }
 
         #contactBtn {
@@ -173,8 +172,8 @@
 
         <section>
             <div class="contact-summary">
-                유OO · 김OO 아들 <strong>유OO</strong><br>
-                박OO · 김OO 딸 <strong>박OO</strong><br>
+                유OO · 김OO <span class="emphasize-text">아들</span> <strong>유OO</strong><br>
+                박OO · 김OO <span class="emphasize-text">딸</span> <strong>박OO</strong><br>
                 <button id="contactBtn">연락하기</button>
             </div>
         </section>
@@ -340,6 +339,7 @@
     </script>
 </body>
 </html>
+
 
 
 
