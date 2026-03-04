@@ -12,6 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        /* 전체 페이지에서 터치 액션을 제어하여 확대 방지 보조 */
+    body {
+        touch-action: pan-y; /* 위아래 스크롤은 허용하되, 줌(확대)은 방지 */
+        -webkit-text-size-adjust: none; /* 아이폰에서 가로 전환 시 글자 크기 자동 확대 방지 */
+    }
+        
         /* [1] 기본 스타일 */
         body {
             font-family: 'Nanum Myeongjo', serif;
@@ -378,9 +384,21 @@
 </div>
 
 <style>
-    .gallery-item img {
-        width: 100%; max-width: 110px; height: 110px; object-fit: cover; border-radius: 2px; cursor: pointer; display: block;
+    .gallery-item {
+        width: 100%; /* 부모 그리드 너비에 맞춤 */
     }
+
+    .gallery-item img {
+        width: 100%;           /* 가로폭 꽉 채우기 */
+        aspect-ratio: 1 / 1;   /* 가로세로 1:1 비율 (정사각형) 강제 */
+        object-fit: cover;     /* 사진 비율이 달라도 꽉 차게 채우고 남는 부분은 자름 */
+        border-radius: 4px;    /* 모서리 곡률 (취향에 따라 0~4px 추천) */
+        cursor: pointer;
+        display: block;
+    }
+
+    /* 3열 그리드의 전체 너비가 너무 넓어지는 것을 방지하고 싶다면 아래 주석 해제 */
+    /* #gallery-grid { max-width: 500px; margin: 0 auto; } */
 </style>
 
 <script>
@@ -501,6 +519,7 @@
     </script>
 </body>
 </html>
+
 
 
 
