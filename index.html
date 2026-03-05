@@ -1,546 +1,1039 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 
+
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>유OO ♥ 박OO 저희 결혼합니다</title>
 
+
+
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,400&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+
+
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
+
+
     <style>
+
         /* 기본 스타일 */
+
         body {
+
             font-family: 'Nanum Myeongjo', serif;
+
             margin: 0;
+
             padding: 0;
+
             background-color: #fff;
+
             color: #333;
+
             line-height: 1.8;
+
             text-align: center;
+
             touch-action: pan-y;
+
             -webkit-text-size-adjust: none;
+
         }
+
+
 
         .container {
+
             max-width: 480px;
+
             margin: 0 auto;
+
             padding: 20px;
+
             box-sizing: border-box;
+
         }
+
+
 
         section {
+
             padding: 60px 0;
+
             border-bottom: 1px solid #eee;
+
         }
+
+
 
         h2 {
+
             font-size: 18px;
+
             color: #888;
+
             margin-bottom: 30px;
+
             letter-spacing: 2px;
+
         }
 
-        /*유연한 폰트 사이즈 설정 (CSS 변수 활용) */
-        :root {
-            --main-title-size: min(12vw, 60px); /* 화면 폭의 12% 혹은 최대 60px */
-            --sub-text-size: clamp(14px, 4vw, 18px); /* 최소 14px, 최대 18px 유지 */
 
-        /*메인 섹션 높이 최적화 */
+
+        /* 메인 섹션 (사진 배경 풀화면 스타일) */
+
         .main-section {
+
             position: relative;
+
             width: 100%;
-            /* 모바일 브라우저 주소창 문제를 해결하는 modern 단위 */
-            height: 100dvh; 
+
+            height: 100vh;
+
             overflow: hidden;
+
             display: flex;
+
             flex-direction: column;
-            justify-content: center; /* 중앙 정렬로 변경하여 인물 가림 방지 */
-            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 60px 20px;
+
+            box-sizing: border-box;
+
+            color: #fff;
+
         }
+
+
 
         .main-bg {
+
             position: absolute;
+
             top: 0;
+
             left: 0;
+
             width: 100%;
+
             height: 100%;
+
             object-fit: cover;
+
             z-index: -2;
+
         }
 
-        /* 타이틀 가독성 및 반응형 크기 */
+
+
         .main-top-title {
+
             font-family: 'Cormorant Garamond', serif;
-            font-size: var(--main-title-size);
+
+            font-size: 60px;
+
             font-weight: 500;
-            line-height: 1;
-            text-align: center;
-            text-shadow: 0 0 15px rgba(0,0,0,0.3); /* 배경 사진 대비 가독성 확보 */
+
+            letter-spacing: 1px;
+
+            line-height: 0.8;
+
+            color: #ffffff;
+
+            margin-top: 10px;
+
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0);
+
+            z-index: 10;
+
         }
 
-        /* 하단 정보 영역 (아이폰 홈바 대응) */
+
+
         .main-bottom-info {
+
             position: absolute;
-            bottom: calc(5% + env(safe-area-inset-bottom));
+
+            bottom: 5%;
+
             width: 100%;
-            font-size: var(--sub-text-size);
-        }
+
+            line-height: 1.6;
+
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);            
+
+          }
+
+
 
         .main-date-venue {
+
             font-size: 16px;
+
             letter-spacing: 0.5px;
+
             margin-bottom: 10px;
+
         }
+
+
 
         .main-names-couple {
+
             font-size: 18px;
+
             font-weight: bold;
+
         }
 
-        /* 장식 요소(꽃, 하트)를 화면 비율(%)로 배치 */
+
+
+        /* 꾸밈 요소 이미지 스타일 */
+
         .deco-icon {
+
             position: absolute;
-            max-width: 10%; /* 화면이 커져도 너무 커지지 않게 제한 */
+
             height: auto;
+
+            opacity: 0.8;
+
             z-index: 1;
+
+            pointer-events: none;
+
         }
+
+
 
         .deco-flower-1 { top: 10%; right: 25%; width: 30px; transform: rotate(15deg); }
+
         .deco-flower-2 { top: 35%; left: 20%; width: 30px; transform: rotate(-10deg); }
+
         .deco-heart-1 { top: 45%; right: 8%; width: 60px; }
+
         .deco-leaf-1 { bottom: 45%; left: 10%; width: 40px; transform: rotate(-70deg); }
+
         .deco-line-1 { top: 22%; left: 13%; width: 30px; transform: rotate(-15deg); opacity: 0.8; }
+
         .deco-line-2 { top: 30%; right: 15%; width: 30px; transform: rotate(-15deg); opacity: 0.8; }
 
+
+
         /* 연락처 섹션 */
+
         .contact-summary { padding: 20px 0; line-height: 2.5; font-size: 17px; }
+
         .emphasize-text { font-family: 'Gowun Batang', serif; font-size: 14px; color: #666; margin: 0 5px; }
+
         
+
         #contactBtn {
+
             background-color: #1a1f3c;
+
             color: white;
+
             width: 85%;
+
             padding: 12px;
+
             border-radius: 5px;
+
             border: none;
+
             margin-top: 20px;
+
             cursor: pointer;
+
             font-family: 'Nanum Myeongjo', serif;
+
             font-size: 16px;
+
         }
 
+
+
         /* 연락처 모달 */
+
         #contactModal {
+
             display: none;
+
             position: fixed;
+
             top: 0;
+
             left: 0;
+
             width: 100%;
+
             height: 100%;
+
             background: rgba(0, 0, 0, 0.6);
+
             z-index: 2000;
+
             align-items: center;
+
             justify-content: center;
+
         }
+
+
 
         #contactModal.active { display: flex; }
 
+
+
         .contact-modal-content {
+
             background: #fff;
+
             width: 85%;
+
             max-width: 350px;
+
             border-radius: 10px;
+
             overflow: hidden;
+
             text-align: left;
+
         }
+
+
 
         .contact-modal-header {
+
             background: #1a1f3c;
+
             color: #fff;
+
             padding: 15px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
         }
+
+
 
         .side-title {
+
             background-color: #f8f9fa;
+
             padding: 8px 20px;
+
             font-size: 13px;
+
             color: #666;
+
             font-weight: bold;
+
             border-bottom: 1px solid #eee;
+
         }
+
+
 
         .contact-row {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             padding: 12px 20px;
+
             border-bottom: 1px solid #f0f0f0;
+
         }
+
+
 
         .contact-label { font-size: 14px; width: 80px; }
+
         .contact-name { flex-grow: 1; font-weight: bold; }
+
         .contact-icons a { text-decoration: none; margin-left: 15px; font-size: 20px; }
+
         .groom-side .contact-label { color: #5a78af; }
+
         .bride-side .contact-label { color: #c06c84; }
 
+
+
         /* 달력 섹션 */
+
         .calendar-container { display: inline-block; margin: 0 auto; text-align: center; }
+
         .calendar-header { font-size: 18px; font-weight: bold; margin-bottom: 25px; color: #333; }
+
         .calendar-table { border-collapse: collapse; margin: 0 auto; }
+
         .calendar-table th, .calendar-table td { width: 45px; height: 45px; padding: 5px; font-size: 16px; vertical-align: middle; }
+
         .calendar-table th { font-weight: normal; color: #333; padding-bottom: 15px; }
+
         .calendar-table th:first-child, .calendar-table td:first-child { color: #d9534f; }
+
         
+
         .selected-day {
+
             background-color: #1a1f3c;
+
             color: #fff !important;
+
             width: 32px;
+
             height: 32px;
+
             line-height: 32px;
+
             display: inline-block;
+
             border-radius: 50%;
+
             font-weight: bold;
+
         }
+
+
 
         /* 갤러리 */
+
         .gallery-item img {
+
             width: 100%;
+
             aspect-ratio: 1 / 1;
+
             object-fit: cover;
+
             border-radius: 4px;
+
             cursor: pointer;
+
             display: block;
+
         }
+
+
 
         #galleryModal {
+
             display: none;
+
             position: fixed;
+
             top: 0;
+
             left: 0;
+
             width: 100%;
+
             height: 100%;
+
             background: rgba(0, 0, 0, 0.95);
+
             z-index: 3000;
+
             align-items: center;
+
             justify-content: center;
+
             touch-action: none;
+
         }
 
+
+
         /* 기타 UI */
+
         .btn-box { background: #f4f4f4; padding: 15px; margin: 10px 0; cursor: pointer; border-radius: 5px; font-weight: bold; }
+
         .hidden-content { display: none; padding: 15px; background: #fcfcfc; border: 1px solid #eee; }
+
     </style>
+
 </head>
+
+
 
 <body>
 
+
+
     <section class="main-section">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/main1.png" alt="메인사진" class="main-bg">
+
         <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.0); z-index:-1;"></div>
 
+
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/flower1.png" class="deco-icon deco-flower-1">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/flower2.png" class="deco-icon deco-flower-2">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/heart.png" class="deco-icon deco-heart-1">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/leaves.png" class="deco-icon deco-leaf-1">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/line1.png" class="deco-icon deco-line-1" alt="선1">
+
         <img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/line2.png" class="deco-icon deco-line-2" alt="선2">
+
+
 
         <div class="main-top-title"><strong>Our<br>Wedding<br>Day</strong></div>
 
+
+
         <div class="main-bottom-info">
+
             <div class="main-date-venue">
+
                 <strong>2026. 07. 05 일요일 오전 11시</strong><br>
+
                 영등포 위더스 9층 아모르홀
+
             </div>
+
             <div class="main-names-couple">유OO ♥ 박OO</div>
+
         </div>
+
     </section>
 
+
+
     <div class="container">
-        <section>
-            <h2>INVITATION</h2>
-            <p>저희 두 사람, 푸른 여름 햇살 아래<br>서로의 나무가 되어주려 합니다.<br>저희의 약속이 숲을 이룰 수 있도록<br>귀한 걸음으로 축복해 주시면<br>큰 기쁨으로 간직하겠습니다.</p>
-        </section>
 
         <section>
-            <div class="contact-summary">
-                유OO · 김OO <span class="emphasize-text">아들</span> <strong>유OO</strong><br>
-                박OO · 김OO <span class="emphasize-text">딸</span> <strong>박OO</strong><br>
-                <button id="contactBtn" onclick="document.getElementById('contactModal').classList.add('active')">연락하기</button>
-            </div>
+
+            <h2>INVITATION</h2>
+
+            <p>저희 두 사람, 푸른 여름 햇살 아래<br>서로의 나무가 되어주려 합니다.<br>저희의 약속이 숲을 이룰 수 있도록<br>귀한 걸음으로 축복해 주시면<br>큰 기쁨으로 간직하겠습니다.</p>
+
         </section>
+
+
+
+        <section>
+
+            <div class="contact-summary">
+
+                유OO · 김OO <span class="emphasize-text">아들</span> <strong>유OO</strong><br>
+
+                박OO · 김OO <span class="emphasize-text">딸</span> <strong>박OO</strong><br>
+
+                <button id="contactBtn" onclick="document.getElementById('contactModal').classList.add('active')">연락하기</button>
+
+            </div>
+
+        </section>
+
+
 
         <div id="contactModal">
+
             <div class="contact-modal-content">
+
                 <div class="contact-modal-header">
+
                     <span>연락하기</span>
+
                     <span onclick="document.getElementById('contactModal').classList.remove('active')" style="cursor:pointer; font-size:24px;">&times;</span>
+
                 </div>
+
                 <div class="contact-modal-body">
+
                     <div class="side-group groom-side">
+
                         <div class="side-title">신랑측</div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신랑</span>
+
                             <span class="contact-name">유OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01012345678">📞</a> <a href="sms:01012345678">✉️</a>
+
                             </div>
+
                         </div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신랑 아버지</span>
+
                             <span class="contact-name">유OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01000000000">📞</a> <a href="sms:01000000000">✉️</a>
+
                             </div>
+
                         </div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신랑 어머니</span>
+
                             <span class="contact-name">김OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01000000000">📞</a> <a href="sms:01000000000">✉️</a>
+
                             </div>
+
                         </div>
+
                     </div>
+
                     <div style="height: 8px; background-color: #eee;"></div>
+
                     <div class="side-group bride-side">
+
                         <div class="side-title">신부측</div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신부</span>
+
                             <span class="contact-name">박OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01087654321">📞</a> <a href="sms:01087654321">✉️</a>
+
                             </div>
+
                         </div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신부 아버지</span>
+
                             <span class="contact-name">박OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01011112222">📞</a> <a href="sms:01011112222">✉️</a>
+
                             </div>
+
                         </div>
+
                         <div class="contact-row">
+
                             <span class="contact-label">신부 어머니</span>
+
                             <span class="contact-name">김OO</span>
+
                             <div class="contact-icons">
+
                                 <a href="tel:01011112222">📞</a> <a href="sms:01011112222">✉️</a>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
+
+
         <section>
+
             <h2>CALENDAR</h2>
+
             <div class="calendar-container">
+
                 <div class="calendar-header">2026. 07</div>
+
                 <table class="calendar-table">
+
                     <thead>
+
                         <tr>
+
                             <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+
                         </tr>
+
                     </thead>
+
                     <tbody>
+
                         <tr>
+
                             <td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td>
+
                         </tr>
+
                         <tr>
+
                             <td><span class="selected-day">5</span></td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+
                         </tr>
+
                         <tr>
+
                             <td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
+
                         </tr>
+
                         <tr>
+
                             <td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+
                         </tr>
+
                         <tr>
+
                             <td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td>
+
                         </tr>
+
                     </tbody>
+
                 </table>
+
             </div>
+
         </section>
 
+
+
         <section>
+
             <h2>오시는 길</h2>
+
             <p>서울 영등포구 영중로 55</p>
+
             <div style="width: 100%; height: 320px; margin-bottom: 20px; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+
                 <iframe src="https://m.place.naver.com/place/31206899/location" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>
+
             </div>
+
             <div style="display: flex; justify-content: space-around; gap: 5px; margin-bottom: 40px;">
+
                 <a href="https://map.kakao.com/link/to/웨딩그룹위더스 영등포,37.5255,126.9070" target="_blank" style="flex:1; border:1px solid #ddd; padding:12px 0; text-decoration:none; color:#333; font-size:13px; border-radius:5px; background:#fff;">카카오내비</a>
+
                 <a href="https://map.naver.com/v5/search/웨딩그룹위더스영등포" target="_blank" style="flex:1; border:1px solid #ddd; padding:12px 0; text-decoration:none; color:#333; font-size:13px; border-radius:5px; background:#fff;">네이버지도</a>
+
             </div>
+
         </section>
 
+
+
         <section>
+
             <h2>마음 전하실 곳</h2>
+
             <div class="btn-box" onclick="toggleContent('acc-groom')" style="border-left: 5px solid #5a78af;">신랑측 계좌번호</div>
+
             <div id="acc-groom" class="hidden-content">
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #5a78af; font-size: 13px; font-weight: bold;">신랑 유OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 123-456-789</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 123456789')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #5a78af; font-size: 13px; font-weight: bold;">신랑 아버지 유OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 123-456-789</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 123456789')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #5a78af; font-size: 13px; font-weight: bold;">신랑 어머니 유OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 123-456-789</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 123456789')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
             </div>
+
+
 
             <div class="btn-box" onclick="toggleContent('acc-bride')" style="border-left: 5px solid #c06c84;">신부측 계좌번호</div>
+
             <div id="acc-bride" class="hidden-content">
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #c06c84; font-size: 13px; font-weight: bold;">신부 박OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 987-654-321</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 987654321')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #c06c84; font-size: 13px; font-weight: bold;">신부 아버지 박OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 987-654-321</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 987654321')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
                     <div style="text-align: left;">
+
                         <span style="color: #c06c84; font-size: 13px; font-weight: bold;">신부 어머니 박OO</span><br>
+
                         <span style="font-size: 14px;">국민은행 987-654-321</span>
+
                     </div>
+
                     <button onclick="copyAcc('국민은행 987654321')" style="padding: 5px 10px; border-radius: 3px; border: 1px solid #ddd; background:#fff; font-size: 12px;">복사</button>
+
                 </div>
+
                 
+
             </div>
+
         </section>
+
+
 
         <section>
+
             <h2>GALLERY</h2>
+
             <div id="gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/01.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/02.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/03.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/04.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/05.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/06.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/07.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/08.jpg" loading="lazy"></div>
+
                 <div class="gallery-item"><img src="https://raw.githubusercontent.com/RufinaPark/wedding-invitation/main/09.jpg" loading="lazy"></div>
+
             </div>
+
             <button id="loadMoreBtn" onclick="loadMorePhotos()" style="width: 100%; margin-top: 20px; padding: 12px; background: none; border: 1px solid #ddd; color: #888; font-family: 'Nanum Myeongjo', serif;">더보기 ∨</button>
+
         </section>
+
     </div>
+
+
 
     <div id="galleryModal" onclick="closeGallery()">
+
         <div onclick="event.stopPropagation(); changePhoto(-1);" style="position: absolute; left: 10px; color: white; font-size: 40px; cursor: pointer; padding: 20px;">‹</div>
+
         <img id="modalImg" src="" style="max-width: 95%; max-height: 85%; border-radius: 5px;">
+
         <div onclick="event.stopPropagation(); changePhoto(1);" style="position: absolute; right: 10px; color: white; font-size: 40px; cursor: pointer; padding: 20px;">›</div>
+
         <div id="galleryIndex" style="position: absolute; bottom: 30px; color: white; font-size: 14px;"></div>
+
     </div>
 
+
+
     <script>
+
         let currentIndex = 0;
+
         const allImages = [];
 
+
+
         window.onload = function() {
+
             // --- [추가 시작] 메인 섹션 높이 고정 코드 ---
+
             function setScreenSize() {
+
                 let vh = window.innerHeight * 0.01;
+
                 document.documentElement.style.setProperty('--vh', `${vh}px`);
+
             
+
                 // 메인 섹션의 높이를 실제 픽셀값으로 고정
+
                 const mainSection = document.querySelector('.main-section');
+
                 mainSection.style.height = `${window.innerHeight}px`;
+
             }
+
             setScreenSize();
+
             
+
             const imgs = document.querySelectorAll('.gallery-item img');
+
             imgs.forEach((img, index) => {
+
                 allImages.push(img.src);
+
                 img.onclick = function() { openGallery(index); };
+
             });
+
         };
+
+
 
         function toggleContent(id) {
+
             const el = document.getElementById(id);
+
             el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+
         }
+
+
 
         function copyAcc(accNum) {
+
             navigator.clipboard.writeText(accNum).then(() => alert('계좌번호가 복사되었습니다.'));
+
         }
+
+
 
         function openGallery(index) {
+
             currentIndex = index;
+
             updateModalPhoto();
+
             document.getElementById('galleryModal').style.display = 'flex';
+
             window.history.pushState({page: "gallery"}, "gallery", "#gallery");
+
         }
+
+
 
         function closeGallery() {
+
             document.getElementById('galleryModal').style.display = 'none';
+
         }
+
+
 
         function updateModalPhoto() {
+
             document.getElementById('modalImg').src = allImages[currentIndex];
+
             document.getElementById('galleryIndex').innerText = (currentIndex + 1) + " / " + allImages.length;
+
         }
+
+
 
         function changePhoto(step) {
+
             currentIndex = (currentIndex + step + allImages.length) % allImages.length;
+
             updateModalPhoto();
+
         }
 
+
+
         window.onpopstate = function() {
+
             document.getElementById('galleryModal').style.display = 'none';
+
         };
+
     </script>
+
 </body>
 
+
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
