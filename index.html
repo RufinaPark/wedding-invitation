@@ -84,19 +84,23 @@
             font-weight: bold;
         }
 
-        /* 꾸밈 요소들 (꽃, 하트 무늬) */
+        /* 꾸밈 요소들 (SVG 아이콘 스타일) */
         .deco-icon {
             position: absolute;
-            font-size: 24px;
-            opacity: 0.7;
-            color: #fff;
+            opacity: 0.7; /* 투명도 조절 */
             pointer-events: none; /* 클릭 방지 */
         }
+        
+        /* SVG 아이콘 색상을 흰색으로 통일 */
+        .deco-icon svg {
+            fill: #fff; 
+        }
+
         /* 예시 사진과 유사한 위치 배치 */
-        .deco-flower-1 { top: 15%; right: 10%; }
-        .deco-flower-2 { top: 35%; left: 8%; font-size: 20px; }
-        .deco-heart-1 { top: 40%; right: 15%; font-size: 30px; }
-        .deco-leaf-1 { top: 55%; left: 5%; font-size: 28px; }
+        .deco-flower-1 { top: 15%; right: 10%; width: 30px; height: 30px; }
+        .deco-flower-2 { top: 35%; left: 8%; width: 25px; height: 25px; }
+        .deco-heart-1 { top: 40%; right: 15%; width: 35px; height: 35px; }
+        .deco-leaf-1 { top: 55%; left: 5%; width: 32px; height: 32px; }
 
         /* [3] 연락처 섹션 */
         .contact-summary { padding: 20px 0; line-height: 2.5; font-size: 17px; }
@@ -690,6 +694,7 @@
     </script>
 </body>
 </html>
+
 
 
 
