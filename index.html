@@ -3,7 +3,7 @@
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Prata&display=swap" rel="stylesheet">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,12 +55,14 @@
 
         /* 상단 제목 스타일 수정 */
         .main-top-title {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Bodoni Moda', serif;
         font-size: 38px;          /* 크기를 조금 더 키워 가독성 확보 */
         font-weight: 400;
         letter-spacing: 2px;
+        color: #ffffff;
         margin-top: 40px;         /* 화면 맨 위에서 적당히 내려오도록 조정 */
         text-shadow: 1px 1px 5px rgba(0,0,0,0.3); /* 배경 사진 대비 글씨 강조 */
+        z-index: 10;
         }
 
         /* 하단 정보 영역 */
@@ -98,9 +100,9 @@
         /* 나뭇잎: 왼쪽 하단 (이름 위쪽 여백) */
         .deco-leaf-1 { bottom: 30%; left: 5%; width: 55px; transform: rotate(20deg); }
         /* 추가될 선(Line) 1: 오른쪽 하단 대각선 방향 */
-        .deco-line-1 { bottom: 25%; right: 5%; width: 100px; opacity: 0.6; }
+        .deco-line-1 {top: 15%; left: 5%; width: 90px;transform: rotate(45deg);opacity: 0.4;  }
         /* 추가될 선(Line) 2: 중앙 좌측 세로선 느낌 */
-        .deco-line-2 { top: 25%; left: 12%; width: 80px; opacity: 0.5; }
+        .deco-line-2 { bottom: 22%; right: 3%; width: 120px; transform: rotate(-15deg); opacity: 0.6; }
 
 
         
@@ -699,6 +701,7 @@
     </script>
 </body>
 </html>
+
 
 
 
