@@ -45,18 +45,22 @@
             letter-spacing: 2px;
         }
 
-        /* 메인 섹션 (사진 배경 풀화면 스타일) */
+        /*유연한 폰트 사이즈 설정 (CSS 변수 활용) */
+        :root {
+            --main-title-size: min(12vw, 60px); /* 화면 폭의 12% 혹은 최대 60px */
+            --sub-text-size: clamp(14px, 4vw, 18px); /* 최소 14px, 최대 18px 유지 */
+
+        /*메인 섹션 높이 최적화 */
         .main-section {
             position: relative;
             width: 100%;
-            height: 100vh;
+            /* 모바일 브라우저 주소창 문제를 해결하는 modern 단위 */
+            height: 100dvh; 
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 60px 20px;
-            box-sizing: border-box;
-            color: #fff;
+            justify-content: center; /* 중앙 정렬로 변경하여 인물 가림 방지 */
+            align-items: center;
         }
 
         .main-bg {
@@ -69,25 +73,23 @@
             z-index: -2;
         }
 
+        /* 타이틀 가독성 및 반응형 크기 */
         .main-top-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 60px;
+            font-size: var(--main-title-size);
             font-weight: 500;
-            letter-spacing: 1px;
-            line-height: 0.8;
-            color: #ffffff;
-            margin-top: 10px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0);
-            z-index: 10;
+            line-height: 1;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(0,0,0,0.3); /* 배경 사진 대비 가독성 확보 */
         }
 
+        /* 하단 정보 영역 (아이폰 홈바 대응) */
         .main-bottom-info {
             position: absolute;
-            bottom: 5%;
+            bottom: calc(5% + env(safe-area-inset-bottom));
             width: 100%;
-            line-height: 1.6;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);            
-          }
+            font-size: var(--sub-text-size);
+        }
 
         .main-date-venue {
             font-size: 16px;
@@ -100,13 +102,12 @@
             font-weight: bold;
         }
 
-        /* 꾸밈 요소 이미지 스타일 */
+        /* 장식 요소(꽃, 하트)를 화면 비율(%)로 배치 */
         .deco-icon {
             position: absolute;
+            max-width: 10%; /* 화면이 커져도 너무 커지지 않게 제한 */
             height: auto;
-            opacity: 0.8;
             z-index: 1;
-            pointer-events: none;
         }
 
         .deco-flower-1 { top: 10%; right: 25%; width: 30px; transform: rotate(15deg); }
@@ -518,6 +519,7 @@
 </body>
 
 </html>
+
 
 
 
